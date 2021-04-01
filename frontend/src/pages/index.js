@@ -36,7 +36,6 @@ const IndexPage = () => {
             direction="row"
             justify="center"
             alignItems="center"
-            spacing={2}
           >
             <Grid 
               item

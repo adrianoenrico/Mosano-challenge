@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid'
 
 
 const IndexPage = () => {
@@ -29,7 +30,15 @@ const IndexPage = () => {
       <main>
         <ThemeProvider theme={theme}>
           <CssBaseline/>
-          
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            spacing={2}
+          >
+            
+          </Grid>
         </ThemeProvider>
       </main>
     </div>

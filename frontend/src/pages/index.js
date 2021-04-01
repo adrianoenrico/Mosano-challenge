@@ -1,15 +1,16 @@
-import * as React from "react"
+import React,{ useMemo } from "react"
 import { Helmet } from "react-helmet";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid'
+import Form from '../components/form'
 
 
 const IndexPage = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-  const theme = React.useMemo(
+  const theme = useMemo(
     () =>
       createMuiTheme({
         palette: {
@@ -37,7 +38,12 @@ const IndexPage = () => {
             alignItems="center"
             spacing={2}
           >
-            
+            <Grid 
+              item
+              xs
+            >
+              <Form />
+            </Grid>
           </Grid>
         </ThemeProvider>
       </main>

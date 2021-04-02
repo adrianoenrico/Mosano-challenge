@@ -29,7 +29,7 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     birthdayBois: ()=> initialBois,
-    countries: ()=> [{name: "Alaska"}],
+    countries: ()=> countries,
   },
 };
 
@@ -39,6 +39,12 @@ const initialBois = [
     country: "Portugal",
     birthday: "08/11/1998",
     id: 1,
+  },
+];
+
+const countries = [
+  {
+    name: "Portugal",
   },
 ];
 

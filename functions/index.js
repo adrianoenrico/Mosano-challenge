@@ -13,16 +13,23 @@ const typeDefs = gql`
     birthday: String!
     name: String!
     country: String!
+    id: ID!
+  }
+  
+  type Country {
+      name: String!
   }
 
   type Query {
     birthdayBois: [BirthdayBoi]
+    countries : [Country]
   }
 `;
 
 const resolvers = {
   Query: {
     birthdayBois: ()=> initialBois,
+    countries: ()=> [{name: "Alaska"}],
   },
 };
 

@@ -1,6 +1,8 @@
 import React from 'react'
 import { DataGrid } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
+//Data
+import { useQuery, gql } from '@apollo/client';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,6 +21,7 @@ const columns = [
     { field: 'birthday', headerName: 'Birthday', width: 120 }
   ];
 
+// Mock data
 const rows = [
     {
         name: 'Adriano Alecrim',
@@ -28,11 +31,24 @@ const rows = [
     }
 ]
 
+const getBirthdayBois = gql`
+  {
+    birthdayBois {
+      id,
+      name,
+      country,
+      birthday
+    } 
+  }
+`;
+
 export default function Table(){
     const classes = useStyles()
+    const { loading, error, data } = useQuery(getBirthdayBois);
+    console.log(data, loading, error);
     return (
     <div className={classes.container}>
-        <DataGrid rows={rows} columns={columns} pageSize={5} />
+        <DataGrid rows={data?data.birthdayBois:[]} columns={columns} loading={loading} pageSize={5} />
     </div>
     )
 }

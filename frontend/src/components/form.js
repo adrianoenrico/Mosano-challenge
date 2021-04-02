@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const country_names = gql`
+const getCountries = gql`
   query Countries {
       countries{
           name
@@ -44,7 +44,9 @@ const country_names = gql`
 export default function Form() {
     const classes = useStyles()
     const { register, handleSubmit, control, watch, errors } = useForm();
-    const { loading, error, data } = useQuery(country_names);
+    const { loading, error, data } = useQuery(getCountries,  {    pollInterval: 10000,
+    }
+    );
     const onSubmit = data => console.log(data);
     console.log(data, loading, error);
     return (

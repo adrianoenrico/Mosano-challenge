@@ -1,15 +1,38 @@
 import React,{ useMemo } from "react"
 import { Helmet } from "react-helmet";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+//My comps
 import Form from '../components/form'
+import Table from '../components/table'
 
+
+const useStyles = makeStyles((theme) => ({
+  container:{
+    position: 'relative',
+    minHeight: '100vh'
+  },
+  content:{
+    paddingBottom: theme.spacing(3)
+  },
+  footer:{
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: theme.palette.primary.light,
+    width: '100%',
+    height: theme.spacing(3),
+    paddingRight: theme.spacing(2)
+  }
+}));
 
 const IndexPage = () => {
+  const classes = useStyles()
+  //Bellow is a media query and overide for the materia-ui theme to check for the user's pref for dark/light mode. As if.
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
   const theme = useMemo(
     () =>
       createMuiTheme({
@@ -28,22 +51,27 @@ const IndexPage = () => {
         />
         <title>Hello there!</title>
       </Helmet>
-      <main>
+      <main className={classes.container}>
         <ThemeProvider theme={theme}>
-          <CssBaseline/>
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-          >
-            <Grid 
-              item
-              xs
-            >
-              <Form />
-            </Grid>
-          </Grid>
+            <CssBaseline/>
+            <div className={classes.content}>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item xs>
+                  <Form />
+                </Grid>
+                <Grid item xs={12} sm={12} md={6}>
+                  <Table />
+                </Grid>
+              </Grid>
+              <div className={classes.footer}>
+                <Typography align='right' >Adriano Alecrim</Typography>
+              </div>
+          </div>
         </ThemeProvider>
       </main>
     </div>

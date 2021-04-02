@@ -72,7 +72,7 @@ export default function Form() {
             <TextField className={classes.textField} label='Birthday' name='birthday' type='date' inputRef={register({required: true})} fullWidth InputLabelProps={{shrink: true}}/>
             {errors.birthday && <Typography className={classes.errorMsg} variant='subtitle2' color='error'>Please enter your birthday</Typography>}
             <div className={classes.btnContainer}>
-                <Button className={classes.submitBtn} variant='contained' type='submit'>Save</Button>
+                <Button className={classes.submitBtn} variant='contained' color='primary' type='submit'>Save</Button>
             </div>
         </form>
     )

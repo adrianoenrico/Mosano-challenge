@@ -32,7 +32,7 @@ export default function Table(){
     const classes = useStyles()
     return (
     <div className={classes.container}>
-        <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+        <DataGrid rows={rows} columns={columns} pageSize={5} />
     </div>
     )
 }

@@ -8,6 +8,7 @@ import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
+import LinearProgress from '@material-ui/core/LinearProgress';
 //Data
 import { useQuery, gql } from '@apollo/client';
 
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
     errorMsg:{
         marginLeft: theme.spacing(1)
-    },
+    }
   }));
 
 const country_names = gql`
@@ -44,9 +45,8 @@ export default function Form() {
     const classes = useStyles()
     const { register, handleSubmit, control, watch, errors } = useForm();
     const { loading, error, data } = useQuery(country_names);
-
     const onSubmit = data => console.log(data);
-    console.log(data, loading);
+    console.log(data, loading, error);
     return (
         <form className={classes.container} onSubmit={handleSubmit(onSubmit)}>
             <TextField className={classes.textField} label='Name' name='name' placeholder='first name goes here' inputRef={register({required: true})} fullWidth />
@@ -63,6 +63,12 @@ export default function Form() {
                     defaultValue={''}
                     as={
                         <Select id='country-select' >
+                            {loading && 
+                                <div className={classes.loadingItems}>
+                                    <LinearProgress  />
+                                    <Typography align='center' component='div'>Loading data...</Typography>
+                                </div>
+                            }
                             {data && data.countries.map((option,i)=>(
                                 <MenuItem key={`${option.name}-${i}`} value={option.name}>{option.name}</MenuItem>
                             ))}

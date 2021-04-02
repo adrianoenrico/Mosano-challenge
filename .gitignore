@@ -1,3 +1,5 @@
 node_modules/
 .cache/
 public
+functions/firebase-debug.log
+functions/ui-debug.log

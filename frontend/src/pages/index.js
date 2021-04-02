@@ -6,10 +6,18 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+//Data
+import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from '@apollo/client';
 //My comps
 import Form from '../components/form'
 import Table from '../components/table'
 
+
+//Added client with basically the same data im going to need(cuz im a lucky boi) which is great for testing!
+const client = new ApolloClient({
+  uri: 'https://countries.trevorblades.com/',
+  cache: new InMemoryCache()
+});
 
 const useStyles = makeStyles((theme) => ({
   container:{
@@ -22,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   footer:{
     position: 'absolute',
     bottom: 0,
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.primary.main,
     width: '100%',
     height: theme.spacing(3),
     paddingRight: theme.spacing(2)
@@ -41,7 +49,6 @@ const IndexPage = () => {
         },
       }),
     [prefersDarkMode]);
-
   return (
     <div>
       <Helmet>
@@ -53,6 +60,7 @@ const IndexPage = () => {
       </Helmet>
       <main className={classes.container}>
         <ThemeProvider theme={theme}>
+          <ApolloProvider client={client}>
             <CssBaseline/>
             <div className={classes.content}>
               <Grid
@@ -71,7 +79,8 @@ const IndexPage = () => {
               <div className={classes.footer}>
                 <Typography align='right' >Adriano Alecrim</Typography>
               </div>
-          </div>
+            </div>
+          </ApolloProvider>
         </ThemeProvider>
       </main>
     </div>

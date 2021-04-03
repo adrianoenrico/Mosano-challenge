@@ -34,12 +34,12 @@ const typeDefs = gql`
   type BirthdayBoi {
     birthday: String!
     name: String!
-    country: Country!
+    country: String!
     _id: ID!
   }
   
   type Country {
-      name: String!,
+      name: String!
       _id: ID!
   }
 
@@ -60,7 +60,7 @@ const typeDefs = gql`
 `;
 const resolvers = {
   Query: {
-    birthdayBois: async () => await BirthdayBoi.find(),
+    birthdayBois: async (parent) => await BirthdayBoi.find(),
     countries: async () => await Country.find(),
   },
   Mutation: {

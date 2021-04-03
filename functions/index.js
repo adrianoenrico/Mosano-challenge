@@ -14,6 +14,7 @@ mongoose.connect(
     }
 );
 
+
 // Mongoose Schemas
 const countrySchema = new mongoose.Schema({
   name: String,

@@ -16,7 +16,8 @@ import Table from '../components/table'
 //Added client with basically the same data im going to need(cuz im a lucky boi) which is great for testing!
 const client = new ApolloClient({
   uri: 'http://localhost:5001/mosano/us-central1/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  connectToDevTools: true
 });
 
 const useStyles = makeStyles((theme) => ({

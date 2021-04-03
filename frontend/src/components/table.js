@@ -44,7 +44,11 @@ const getBirthdayBois = gql`
 
 export default function Table(){
     const classes = useStyles()
-    const { loading, error, data } = useQuery(getBirthdayBois);
+    const { loading, error, data } = useQuery(
+      getBirthdayBois,
+      {
+        pollInterval: 30000,
+      });
     console.log(data, loading, error);
     return (
     <div className={classes.container}>

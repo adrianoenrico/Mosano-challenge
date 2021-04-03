@@ -44,8 +44,11 @@ const getCountries = gql`
 export default function Form() {
     const classes = useStyles()
     const { register, handleSubmit, control, watch, errors } = useForm();
-    const { loading, error, data } = useQuery(getCountries,  {    pollInterval: 10000,
-    }
+    const { loading, error, data } = useQuery(
+        getCountries,
+        {
+            pollInterval: 30000,
+        }
     );
     const onSubmit = data => console.log(data);
     console.log(data, loading, error);

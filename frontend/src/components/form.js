@@ -10,7 +10,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
 import LinearProgress from '@material-ui/core/LinearProgress';
 //Data
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useMutation } from '@apollo/client';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,24 +33,65 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const getCountries = gql`
+const GET_COUNTRIES = gql`
   query Countries {
       countries{
           name
       }
   }
 `;
+const ADD_BIRTHDAY = gql`
+    mutation addBirthdayBoi($name: String!, $birthday: String!, $country: String!) {
+        addBirthdayBoi(name: $name, birthday: $birthday, country: $country) {
+            name
+            birthday
+            country
+            _id
+        }
+    }
+`;
 
 export default function Form() {
     const classes = useStyles()
-    const { register, handleSubmit, control, watch, errors } = useForm();
+    const { register, handleSubmit, control, errors } = useForm();
     const { loading, error, data } = useQuery(
-        getCountries,
+        GET_COUNTRIES,
         {
             pollInterval: 30000,
         }
     );
-    const onSubmit = data => console.log(data);
+    const [addBirthdayBoi] = useMutation(ADD_BIRTHDAY, { 
+        update(cache, { data: { addBirthdayBoi }}) {
+            cache.modify({
+                fields: {
+                    birthdayBois(existingBois = []){
+                        const newBoiRef = cache.writeFragment({
+                            data: addBirthdayBoi,
+                            fragment: gql`
+                              fragment NewBoi on BirthdayBoi {
+                                  _id
+                                  name
+                                  country
+                                  birthday
+                              }
+                            `
+                        });
+                        return [...existingBois, newBoiRef]
+                    }
+                }
+            })
+        }
+    });
+    const onSubmit = data => {
+        let birthday = new Date(data.birthday);
+        addBirthdayBoi({
+            variables:{
+                name: `${data.name}${data.surname?' ' + data.surname:''}`,
+                birthday: birthday.toLocaleDateString('en-US'),
+                country: data.country
+            }
+        })
+    }
     console.log(data, loading, error);
     return (
         <form className={classes.container} onSubmit={handleSubmit(onSubmit)}>

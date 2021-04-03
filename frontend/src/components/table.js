@@ -32,13 +32,13 @@ const rows = [
 ]
 
 const getBirthdayBois = gql`
-  {
+  query getBirtdayBois {
     birthdayBois {
-      id,
-      name,
-      country,
       birthday
-    } 
+      name
+      _id
+      country
+    }
   }
 `;
 
@@ -48,7 +48,9 @@ export default function Table(){
     console.log(data, loading, error);
     return (
     <div className={classes.container}>
-        <DataGrid rows={data?data.birthdayBois:[]} columns={columns} loading={loading} pageSize={5} />
+        <DataGrid rows={data?data.birthdayBois.map(i =>{
+          return {id:i._id, name:i.name, country: i.country, birthday: i.birthday}
+        }):[]} columns={columns} loading={loading} pageSize={5} />
     </div>
     )
 }

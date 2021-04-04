@@ -13,7 +13,6 @@ export default function Snack({ open, message, handleClose }) {
           horizontal: 'center',
         }}
         open={open}
-        autoHideDuration={6000}
         onClose={handleClose}
         message={message}
         action={

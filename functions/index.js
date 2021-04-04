@@ -65,8 +65,8 @@ const resolvers = {
     // make doc from model with recieved args & save it.
     addBirthdayBoi: async (parent, args) => {
       // This mut isnt protected bc we want a public app.
-      // Please never do this without captcha to prevent a shit ton of spam.
-      // TODO: add reCAPTCHA in client. After all firebase is running off my pocket...
+      // Please never do this without rate limting the function to prevent a shit ton of spam.
+      // TODO: add function rate limiting per Ip and pagination
       const boi = new BirthdayBoi({
         name: args.name,
         country: args.country,

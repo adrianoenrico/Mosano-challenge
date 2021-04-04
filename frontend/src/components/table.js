@@ -74,7 +74,20 @@ export default function Table(){
         loading={loading} 
         pageSize={5} 
         onRowSelected={({data}) => {
-          setSnack({ open: true, message: ''});
+          // Age calculation:
+          let ageDifMilli = Date.now() - new Date(data.birthday).getTime();
+          let ageDate = new Date(ageDifMilli);
+          let age = Math.abs(ageDate.getUTCFullYear() - 1970);
+          let bday = new Date(data.birthday);
+          setSnack({ 
+            open: true,
+            message: `
+              Hello ${data.name} from ${data.country} on 
+              ${bday.getDate()} of month
+              ${bday.toLocaleDateString('en-US', {  month: 'long'})} you will
+              have ${age + 1}
+            `
+          });
         }}
       />
       <Snack open={snack.open} message={snack.message} handleClose={handleClose} />

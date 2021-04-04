@@ -15,7 +15,8 @@ mongoose.connect(
 );
 
 
-// Mongoose Schemas
+// Mongoose Schemas and models. Yes, i used stupid names in these vars. 
+// How else am i supposed to have fun? 
 const countrySchema = new mongoose.Schema({
   name: String
 });
@@ -26,8 +27,8 @@ const birthdayBoiSchema = new mongoose.Schema({
   country: String
 });
 const BirthdayBoi = mongoose.model("BirthdayBoi", birthdayBoiSchema);
-
 // GraphQL Defs: simple, no refs cuz im too lazy to implement 'em
+// Reuses mongos' _id. Lazy and usefull as Apollo knows to use it as priamry in the client.
 const typeDefs = gql`
   type BirthdayBoi {
     birthday: String!
@@ -35,12 +36,10 @@ const typeDefs = gql`
     country: String!
     _id: ID!
   }
-  
   type Country {
       name: String!
       _id: ID!
   }
-
   type Query {
     birthdayBois: [BirthdayBoi]
     countries : [Country]
@@ -57,6 +56,7 @@ const typeDefs = gql`
   }
 `;
 const resolvers = {
+  // Commenting these defy all logic.
   Query: {
     birthdayBois: async (parent) => await BirthdayBoi.find(),
     countries: async () => await Country.find(),
@@ -64,7 +64,9 @@ const resolvers = {
   Mutation: {
     // make doc from model with recieved args & save it.
     addBirthdayBoi: async (parent, args) => {
-      // This mut isnt protected bc we want a public app
+      // This mut isnt protected bc we want a public app.
+      // Please never do this without captcha to prevent a shit ton of spam.
+      // TODO: add reCAPTCHA in client. After all firebase is running off my pocket...
       const boi = new BirthdayBoi({
         name: args.name,
         country: args.country,
@@ -72,8 +74,9 @@ const resolvers = {
       });
       return await boi.save();
     },
+    // The resolvers below are protected via context. 
     addCountry: async (parent, args, context) => {
-      // This is protected by context verification.
+      
       if (!context.loggedIn) {
         throw new AuthenticationError("AUTH TOKEN NOT FOUND OR NOT VALID");
       }
@@ -102,7 +105,10 @@ const resolvers = {
   },
 };
 
-// Express/Apollo Startup and connection
+// Express/Apollo Startup and connection. 
+// We're using a firebase fn solely because i was too lazy to deploy to anywhere else.
+// Plus my pc had just be reinstalled and i only had firebase-cli.
+// We're using express inside the fn to serve just one route, but we could define n endpoints.
 const app = express();
 const server = new ApolloServer({
   typeDefs,
@@ -116,7 +122,7 @@ const server = new ApolloServer({
     return {loggedIn};
   },
 });
-server.applyMiddleware({app, path: "/"});
-
-
+// Here i'm connecting the app to the only paty I'll be using. Apollo Server will handle most the config.
+// Cors is set to true because I dont want to write a rewrite just for this.
+server.applyMiddleware({app, path: "/", cors: true});
 exports.graphql = functions.https.onRequest(app);

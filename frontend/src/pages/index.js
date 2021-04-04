@@ -1,4 +1,4 @@
-import React,{ useMemo } from "react"
+import React, { useMemo } from "react"
 import { Helmet } from "react-helmet";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,14 +21,14 @@ const client = new ApolloClient({
 });
 
 const useStyles = makeStyles((theme) => ({
-  container:{
+  container: {
     position: 'relative',
     minHeight: '100vh'
   },
-  content:{
+  content: {
     paddingBottom: theme.spacing(3)
   },
-  footer:{
+  footer: {
     position: 'absolute',
     bottom: 0,
     backgroundColor: theme.palette.primary.main,
@@ -62,7 +62,7 @@ const IndexPage = () => {
       <main className={classes.container}>
         <ThemeProvider theme={theme}>
           <ApolloProvider client={client}>
-            <CssBaseline/>
+            <CssBaseline />
             <div className={classes.content}>
               <Grid
                 container

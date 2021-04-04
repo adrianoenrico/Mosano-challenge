@@ -17,19 +17,17 @@ mongoose.connect(
 
 // Mongoose Schemas
 const countrySchema = new mongoose.Schema({
-  name: String,
-  id: mongoose.ObjectId,
+  name: String
 });
 const Country = mongoose.model("Country", countrySchema);
 const birthdayBoiSchema = new mongoose.Schema({
   name: String,
   birthday: String,
-  country: String,
-  id: mongoose.ObjectId,
+  country: String
 });
 const BirthdayBoi = mongoose.model("BirthdayBoi", birthdayBoiSchema);
 
-// GraphQL Defs
+// GraphQL Defs: simple, no refs cuz im too lazy to implement 'em
 const typeDefs = gql`
   type BirthdayBoi {
     birthday: String!
@@ -64,6 +62,7 @@ const resolvers = {
     countries: async () => await Country.find(),
   },
   Mutation: {
+    // make doc from model with recieved args & save it.
     addBirthdayBoi: async (parent, args) => {
       // This mut isnt protected bc we want a public app
       const boi = new BirthdayBoi({
@@ -84,7 +83,6 @@ const resolvers = {
       return await country.save();
     },
     deleteCountry: async (parent, args, context) => {
-    // This is protected by context verification.
       if (!context.loggedIn) {
         throw new AuthenticationError("AUTH TOKEN NOT FOUND OR NOT VALID");
       }
@@ -92,7 +90,6 @@ const resolvers = {
       return country;
     },
     updateCountry: async (parent, args, context) => {
-    // This is protected by context verification.
       if (!context.loggedIn) {
         throw new AuthenticationError("AUTH TOKEN NOT FOUND OR NOT VALID");
       }
@@ -111,6 +108,10 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({req}) => {
+    //For security I just implemented the simplest logic possible:
+    // No token, no auth. The rest are details. 
+    // Could have used a password, specific token(unsafe in case of breach),
+    // encripted token key(or as i like to call 'em, salty keys), passwords, etc
     const loggedIn = req.headers.authorization?true:false;
     return {loggedIn};
   },

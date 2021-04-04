@@ -92,7 +92,6 @@ export default function Form() {
             }
         })
     }
-    console.log(data, loading, error);
     return (
         <form className={classes.container} onSubmit={handleSubmit(onSubmit)}>
             <TextField className={classes.textField} label='Name' name='name' placeholder='first name goes here' inputRef={register({required: true})} fullWidth />

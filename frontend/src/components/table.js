@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DataGrid } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
 //Data
 import { useQuery, gql } from '@apollo/client';
-
+// My comps
+import Snack from './snack'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -43,18 +44,40 @@ const getBirthdayBois = gql`
 `;
 
 export default function Table(){
-    const classes = useStyles()
-    const { loading, error, data } = useQuery(
-      getBirthdayBois,
-      {
-        pollInterval: 30000,
-      });
-    console.log(data, loading, error);
-    return (
+  const classes = useStyles()
+  const { loading, error, data } = useQuery(
+    getBirthdayBois,
+    {
+      pollInterval: 30000,
+    });
+  const [snack, setSnack] = useState({
+    open: false,
+    message: ''
+  })
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnack(false);
+  };
+  return (
     <div className={classes.container}>
-        <DataGrid rows={data?data.birthdayBois.map(i =>{
-          return {id:i._id, name:i.name, country: i.country, birthday: i.birthday}
-        }):[]} columns={columns} loading={loading} pageSize={5} />
+        <DataGrid 
+        rows={
+          data?
+          data.birthdayBois.map(i =>{
+            return {id:i._id, name:i.name, country: i.country, birthday: i.birthday}
+          }):
+          []
+        } 
+        columns={columns}
+        loading={loading} 
+        pageSize={5} 
+        onRowSelected={({data}) => {
+          setSnack({ open: true, message: ''});
+        }}
+      />
+      <Snack open={snack.open} message={snack.message} handleClose={handleClose} />
     </div>
-    )
+  )
 }

@@ -3,8 +3,10 @@ import { DataGrid } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
 //Data
 import { useQuery, gql } from '@apollo/client';
-// My comps
+// My comps and utils
 import Snack from './snack'
+import { getAge } from '../utils'
+
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -74,10 +76,7 @@ export default function Table(){
         loading={loading} 
         pageSize={5} 
         onRowSelected={({data}) => {
-          // Age calculation:
-          let ageDifMilli = Date.now() - new Date(data.birthday).getTime();
-          let ageDate = new Date(ageDifMilli);
-          let age = Math.abs(ageDate.getUTCFullYear() - 1970);
+          let age = getAge(data.birthday)
           let bday = new Date(data.birthday);
           setSnack({ 
             open: true,

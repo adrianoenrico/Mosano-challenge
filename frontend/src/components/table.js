@@ -54,6 +54,7 @@ export default function Table() {
     message: '',
   })
   const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return;
     setSnack(false)
   }
   return (

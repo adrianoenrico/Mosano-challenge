@@ -95,7 +95,8 @@ export default function Form() {
       })
     },
   })
-  const handleClose = () => {
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return;
     setSnack(false)
   }
   const onSubmit = (data) => {

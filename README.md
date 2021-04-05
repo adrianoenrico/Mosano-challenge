@@ -7,6 +7,7 @@
   Gatsby minimal starter
 </h1>
 # [Here's the deployed app](https://mosano.web.app)
+
 ## 🚀 Quick start
 
 1.  **Create a Gatsby site.**

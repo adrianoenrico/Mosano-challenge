@@ -8,15 +8,19 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 //Data
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import fetch from 'isomorphic-fetch'
 //My comps
 import Form from '../components/form'
 import Table from '../components/table'
 
-//Added client with basically the same data im going to need(cuz im a lucky boi) which is great for testing!
+
+const link = createHttpLink({
+  fetch,
+  uri: 'https://us-central1-mosano.cloudfunctions.net/graphql'
+})
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/mosano/us-central1/graphql',
-  cache: new InMemoryCache(),
-  connectToDevTools: true,
+  link: link,
+  cache: new InMemoryCache()
 })
 
 const useStyles = makeStyles((theme) => ({

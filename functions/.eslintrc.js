@@ -9,8 +9,8 @@ module.exports = {
     "google",
   ],
   rules: {
-    quotes: ["error", "double"],
-    "linebreak-style": "windows",
+    "quotes": ["error", "double"],
+    "linebreak-style": 0,
   },
   parser: "babel-eslint",
 };

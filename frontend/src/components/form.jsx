@@ -1,27 +1,27 @@
-import React, { useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import { makeStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
-import MenuItem from '@material-ui/core/MenuItem'
-import Select from '@material-ui/core/Select'
-import InputLabel from '@material-ui/core/InputLabel'
-import FormControl from '@material-ui/core/FormControl'
-import Typography from '@material-ui/core/Typography'
-import LinearProgress from '@material-ui/core/LinearProgress'
-import FormHelperText from '@material-ui/core/FormHelperText'
-//Data
-import { useQuery, gql, useMutation } from '@apollo/client'
+import React, { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import FormHelperText from '@material-ui/core/FormHelperText';
+// Data
+import { useQuery, gql, useMutation } from '@apollo/client';
 // Other
-import Snack from './snack'
-import { getAge } from '../utils'
 // Date utils
-import { compareAsc } from 'date-fns'
-import DateFnsUtils from '@date-io/date-fns'
+import { compareAsc } from 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
-} from '@material-ui/pickers'
+} from '@material-ui/pickers';
+import { getAge } from '../utils';
+import Snack from './snack';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     padding: theme.spacing(3, 1, 0, 0),
   },
-}))
+}));
 
 const GET_COUNTRIES = gql`
   query Countries {
@@ -46,7 +46,7 @@ const GET_COUNTRIES = gql`
       name
     }
   }
-`
+`;
 const ADD_BIRTHDAY = gql`
   mutation addBirthdayBoi(
     $name: String!
@@ -60,21 +60,24 @@ const ADD_BIRTHDAY = gql`
       _id
     }
   }
-`
+`;
 
 export default function Form() {
-  const classes = useStyles()
-  const { register, handleSubmit, control, errors, reset } = useForm({
+  const classes = useStyles();
+  const {
+    register, handleSubmit, control, errors, reset,
+  } = useForm({
     defaultValues: { birthday: new Date() },
-  })
+  });
   const [snack, setSnack] = useState({
     open: false,
     message: '',
-  })
+  });
   const { loading, data } = useQuery(GET_COUNTRIES, {
     pollInterval: 30000,
-  })
+  });
   const [addBirthdayBoi] = useMutation(ADD_BIRTHDAY, {
+    // eslint-disable-next-line no-shadow
     update(cache, { data: { addBirthdayBoi } }) {
       cache.modify({
         fields: {
@@ -89,29 +92,28 @@ export default function Form() {
                   birthday
                 }
               `,
-            })
-            return [...existingBois, newBoiRef]
+            });
+            return [...existingBois, newBoiRef];
           },
         },
-      })
+      });
     },
-  })
+  });
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') return
-    setSnack(false)
-  }
-  const onSubmit = (data) => {
-    console.log(data)
-    let birthday = new Date(data.birthday).toLocaleDateString('en-US')
+    if (reason === 'clickaway') return;
+    setSnack(false);
+  };
+  const onSubmit = (d) => {
+    const birthday = new Date(d.birthday).toLocaleDateString('en-US');
     addBirthdayBoi({
       variables: {
-        name: `${data.name}${data.surname ? ' ' + data.surname : ''}`,
-        birthday: birthday,
-        country: data.country,
+        name: `${d.name}${d.surname ? ` ${d.surname}` : ''}`,
+        birthday,
+        country: d.country,
       },
-    })
-    let age = getAge(birthday)
-    let bday = new Date(data.birthday)
+    });
+    const age = getAge(birthday);
+    const bday = new Date(data.birthday);
     setSnack({
       open: true,
       message: `
@@ -120,9 +122,9 @@ export default function Form() {
             ${bday.toLocaleDateString('en-US', { month: 'long' })} you will
             have ${age + 1}
           `,
-    })
-    reset()
-  }
+    });
+    reset();
+  };
   return (
     <>
       <form className={classes.container} onSubmit={handleSubmit(onSubmit)}>
@@ -154,8 +156,8 @@ export default function Form() {
             name="country"
             control={control}
             rules={{ required: true }}
-            defaultValue={''}
-            as={
+            defaultValue=""
+            as={(
               <Select id="country-select">
                 {loading && (
                   <div className={classes.loadingItems}>
@@ -165,14 +167,14 @@ export default function Form() {
                     </Typography>
                   </div>
                 )}
-                {data &&
-                  data.countries.map((option, i) => (
-                    <MenuItem key={`${option.name}-${i}`} value={option.name}>
+                {data
+                  && data.countries.map((option, i) => (
+                    <MenuItem key={`${option.name + i}`} value={option.name}>
                       {option.name}
                     </MenuItem>
                   ))}
               </Select>
-            }
+            )}
           />
           {errors.country && (
             <FormHelperText>
@@ -186,8 +188,8 @@ export default function Form() {
           rules={{
             required: true,
             validate: (value) => {
-              let res = compareAsc(new Date(), value)
-              return res === 1 ? true : false
+              const res = compareAsc(new Date(), value);
+              return res === 1;
             },
           }}
           render={({ onChange, value, name }) => (
@@ -226,5 +228,5 @@ export default function Form() {
         handleClose={handleClose}
       />
     </>
-  )
+  );
 }

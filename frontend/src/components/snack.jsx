@@ -1,7 +1,8 @@
-import React from 'react'
-import Snackbar from '@material-ui/core/Snackbar'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
+/* eslint-disable react/prop-types */
+import React from 'react';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 export default function Snack({ open, message, handleClose }) {
   return (
@@ -14,7 +15,7 @@ export default function Snack({ open, message, handleClose }) {
         open={open}
         onClose={handleClose}
         message={message}
-        action={
+        action={(
           <>
             <IconButton
               size="small"
@@ -25,8 +26,8 @@ export default function Snack({ open, message, handleClose }) {
               <CloseIcon fontSize="small" />
             </IconButton>
           </>
-        }
+        )}
       />
     </div>
-  )
+  );
 }

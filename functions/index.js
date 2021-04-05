@@ -66,7 +66,9 @@ const resolvers = {
     addBirthdayBoi: async (parent, args) => {
       // This mut isnt protected bc we want a public app.
       // Please never do this without rate limting the function to prevent a shit ton of spam.
-      // TODO: add function rate limiting per Ip and pagination
+      // Note about this app's security: it's somewhat vunerable to DoS attacks but not in the usual way 
+      // as we're serverless. But we do have the default 60 sec timeout. The only other reasonable measure\
+      // for this app would be implementing a rate limiter (possibly by caller IP).
       const boi = new BirthdayBoi({
         name: args.name,
         country: args.country,

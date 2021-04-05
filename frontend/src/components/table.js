@@ -63,11 +63,11 @@ export default function Table() {
         open: true,
         message: `Something bad happenend. Please try again later. (${error.message})`,
       }
-    };
-    setSnack(val);
+    }
+    setSnack(val)
   }, [error])
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') return;
+    if (reason === 'clickaway') return
     setSnack(false)
   }
   return (
@@ -76,13 +76,13 @@ export default function Table() {
         rows={
           data
             ? data.birthdayBois.map((i) => {
-              return {
-                id: i._id,
-                name: i.name,
-                country: i.country,
-                birthday: i.birthday,
-              }
-            })
+                return {
+                  id: i._id,
+                  name: i.name,
+                  country: i.country,
+                  birthday: i.birthday,
+                }
+              })
             : []
         }
         columns={columns}
@@ -90,7 +90,7 @@ export default function Table() {
         pageSize={5}
         disableSelectionOnClick={true}
         // in a normal app, i'd implement pagination in client and api(if in-house)
-        // to prevent long ass queries 
+        // to prevent long ass queries
         onRowClick={({ row: data }) => {
           let age = getAge(data.birthday)
           let bday = new Date(data.birthday)

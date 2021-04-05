@@ -17,12 +17,11 @@ import Snack from './snack'
 import { getAge } from '../utils'
 // Date utils
 import { compareAsc } from 'date-fns'
-import DateFnsUtils from '@date-io/date-fns';
+import DateFnsUtils from '@date-io/date-fns'
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
-} from '@material-ui/pickers';
-
+} from '@material-ui/pickers'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -65,7 +64,9 @@ const ADD_BIRTHDAY = gql`
 
 export default function Form() {
   const classes = useStyles()
-  const { register, handleSubmit, control, errors, reset } = useForm({ defaultValues: { birthday: new Date() } })
+  const { register, handleSubmit, control, errors, reset } = useForm({
+    defaultValues: { birthday: new Date() },
+  })
   const [snack, setSnack] = useState({
     open: false,
     message: '',
@@ -96,11 +97,11 @@ export default function Form() {
     },
   })
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') return;
+    if (reason === 'clickaway') return
     setSnack(false)
   }
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(data)
     let birthday = new Date(data.birthday).toLocaleDateString('en-US')
     addBirthdayBoi({
       variables: {
@@ -183,12 +184,13 @@ export default function Form() {
           name="birthday"
           control={control}
           rules={{
-            required: true, validate: (value) => {
+            required: true,
+            validate: (value) => {
               let res = compareAsc(new Date(), value)
               return res === 1 ? true : false
-            }
+            },
           }}
-          render={({ onChange, value, name }) =>
+          render={({ onChange, value, name }) => (
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
                 className={classes.textField}
@@ -205,7 +207,7 @@ export default function Form() {
                 }}
               />
             </MuiPickersUtilsProvider>
-          }
+          )}
         />
         <div className={classes.btnContainer}>
           <Button

@@ -16,7 +16,7 @@ import { useQuery, gql, useMutation } from '@apollo/client'
 import Snack from './snack'
 import { getAge } from '../utils'
 // Date utils
-import 'date-fns'
+import { compareAsc } from 'date-fns'
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -65,7 +65,7 @@ const ADD_BIRTHDAY = gql`
 
 export default function Form() {
   const classes = useStyles()
-  const { register, handleSubmit, control, errors, reset } = useForm()
+  const { register, handleSubmit, control, errors, reset } = useForm({ defaultValues: { birthday: new Date() } })
   const [snack, setSnack] = useState({
     open: false,
     message: '',
@@ -181,8 +181,12 @@ export default function Form() {
         <Controller
           name="birthday"
           control={control}
-          rules={{ required: true }}
-          defaultValue={new Date()}
+          rules={{
+            required: true, validate: (value) => {
+              let res = compareAsc(new Date(), value)
+              return res === 1 ? true : false
+            }
+          }}
           render={({ onChange, value, name }) =>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
@@ -192,6 +196,7 @@ export default function Form() {
                 selected={value}
                 value={value}
                 format="MM/dd/yyyy"
+                helperText="Dates past today won't be allowed"
                 label="Birthday"
                 fullWidth
                 KeyboardButtonProps={{

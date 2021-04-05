@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'Hello There!',
+    siteUrl: 'https://mosano.web.app'
   },
   plugins: [
     'gatsby-plugin-react-helmet',

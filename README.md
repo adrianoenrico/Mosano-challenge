@@ -6,7 +6,7 @@
 <h1 align="center">
   Gatsby minimal starter
 </h1>
-# URL:  https://mosano.web.app
+# [Here's the deployed app](https://mosano.web.app)
 ## 🚀 Quick start
 
 1.  **Create a Gatsby site.**

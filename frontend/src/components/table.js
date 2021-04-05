@@ -62,13 +62,13 @@ export default function Table() {
         rows={
           data
             ? data.birthdayBois.map((i) => {
-                return {
-                  id: i._id,
-                  name: i.name,
-                  country: i.country,
-                  birthday: i.birthday,
-                }
-              })
+              return {
+                id: i._id,
+                name: i.name,
+                country: i.country,
+                birthday: i.birthday,
+              }
+            })
             : []
         }
         columns={columns}

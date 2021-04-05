@@ -24,14 +24,14 @@ const columns = [
 ]
 
 // Mock data
-const rows = [
-  {
-    name: 'Adriano Alecrim',
-    country: 'Portugal',
-    birthday: '08/11/1998',
-    id: 123314,
-  },
-]
+// const rows = [
+//   {
+//     name: 'Adriano Alecrim',
+//     country: 'Portugal',
+//     birthday: '08/11/1998',
+//     id: 123314,
+//   },
+// ]
 
 const getBirthdayBois = gql`
   query getBirtdayBois {

@@ -10,12 +10,19 @@ import FormControl from '@material-ui/core/FormControl'
 import Typography from '@material-ui/core/Typography'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import FormHelperText from '@material-ui/core/FormHelperText'
-import { isAfter } from 'date-fns/isAfter'
 //Data
 import { useQuery, gql, useMutation } from '@apollo/client'
 // Other
 import Snack from './snack'
 import { getAge } from '../utils'
+// Date utils
+import 'date-fns'
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -88,10 +95,11 @@ export default function Form() {
       })
     },
   })
-  const handleClose = (event, reason) => {
+  const handleClose = () => {
     setSnack(false)
   }
   const onSubmit = (data) => {
+    console.log(data);
     let birthday = new Date(data.birthday).toLocaleDateString('en-US')
     addBirthdayBoi({
       variables: {
@@ -170,17 +178,30 @@ export default function Form() {
             </FormHelperText>
           )}
         </FormControl>
-        <TextField
-          className={classes.textField}
-          label="Birthday"
-          name="birthday"
-          type="date"
-          inputRef={register({ required: true })}
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-          error={errors.birthday}
-          helperText={errors.country ? 'Please enter a valid date' : false}
-        />
+          <Controller
+            name="birthday"
+            control={control}
+            rules={{ required: true }}
+            defaultValue={new Date()}
+            render={({onChange, value, name}) => 
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  className={classes.textField}
+                  name={name}
+                  onChange={onChange}
+                  selected={value}
+                  value={value}
+                  format="MM/dd/yyyy"
+                  label="Birthday"
+                  fullWidth
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
+                />
+              </MuiPickersUtilsProvider>
+            }
+          />
+        
         <div className={classes.btnContainer}>
           <Button
             className={classes.submitBtn}

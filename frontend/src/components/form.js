@@ -178,30 +178,29 @@ export default function Form() {
             </FormHelperText>
           )}
         </FormControl>
-          <Controller
-            name="birthday"
-            control={control}
-            rules={{ required: true }}
-            defaultValue={new Date()}
-            render={({onChange, value, name}) => 
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  className={classes.textField}
-                  name={name}
-                  onChange={onChange}
-                  selected={value}
-                  value={value}
-                  format="MM/dd/yyyy"
-                  label="Birthday"
-                  fullWidth
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-              </MuiPickersUtilsProvider>
-            }
-          />
-        
+        <Controller
+          name="birthday"
+          control={control}
+          rules={{ required: true }}
+          defaultValue={new Date()}
+          render={({ onChange, value, name }) =>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                className={classes.textField}
+                name={name}
+                onChange={onChange}
+                selected={value}
+                value={value}
+                format="MM/dd/yyyy"
+                label="Birthday"
+                fullWidth
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </MuiPickersUtilsProvider>
+          }
+        />
         <div className={classes.btnContainer}>
           <Button
             className={classes.submitBtn}

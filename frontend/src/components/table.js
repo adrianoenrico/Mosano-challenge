@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { DataGrid } from '@material-ui/data-grid'
 import { makeStyles } from '@material-ui/core/styles'
 //Data
@@ -53,6 +53,19 @@ export default function Table() {
     open: false,
     message: '',
   })
+  useEffect(() => {
+    let val = {
+      open: false,
+      message: '',
+    }
+    if (error) {
+      val = {
+        open: true,
+        message: `Something bad happenend. Please try again later. (${error.message})`,
+      }
+    };
+    setSnack(val);
+  }, [error])
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return;
     setSnack(false)
@@ -90,8 +103,8 @@ export default function Table() {
         }}
       />
       <Snack
-        open={snack.open || error}
-        message={snack.message || (error && 'Something bad happened with the connection. Try again later')}
+        open={snack.open}
+        message={snack.message}
         handleClose={handleClose}
       />
     </div>

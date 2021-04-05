@@ -88,7 +88,8 @@ export default function Table() {
         columns={columns}
         loading={loading}
         pageSize={5}
-        onRowSelected={({ data }) => {
+        disableSelectionOnClick={true}
+        onRowClick={({ row: data }) => {
           let age = getAge(data.birthday)
           let bday = new Date(data.birthday)
           setSnack({

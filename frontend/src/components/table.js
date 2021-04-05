@@ -90,8 +90,8 @@ export default function Table() {
         }}
       />
       <Snack
-        open={snack.open}
-        message={snack.message}
+        open={snack.open || error}
+        message={snack.message || (error && 'Something bad happened with the connection. Try again later')}
         handleClose={handleClose}
       />
     </div>

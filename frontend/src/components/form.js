@@ -70,7 +70,7 @@ export default function Form() {
     open: false,
     message: '',
   })
-  const { loading, error, data } = useQuery(GET_COUNTRIES, {
+  const { loading, data } = useQuery(GET_COUNTRIES, {
     pollInterval: 30000,
   })
   const [addBirthdayBoi] = useMutation(ADD_BIRTHDAY, {

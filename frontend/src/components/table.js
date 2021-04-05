@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import { DataGrid } from '@material-ui/data-grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { DataGrid } from '@material-ui/data-grid'
+import { makeStyles } from '@material-ui/core/styles'
 //Data
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client'
 // My comps and utils
 import Snack from './snack'
 import { getAge } from '../utils'
-
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -14,15 +13,15 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     padding: theme.spacing(2),
     width: '100%',
-    height: 400
+    height: 400,
   },
-}));
+}))
 
 const columns = [
   { field: 'name', headerName: 'Name', width: 150 },
   { field: 'country', headerName: 'Country', width: 125 },
-  { field: 'birthday', headerName: 'Birthday', width: 120 }
-];
+  { field: 'birthday', headerName: 'Birthday', width: 120 },
+]
 
 // Mock data
 const rows = [
@@ -30,8 +29,8 @@ const rows = [
     name: 'Adriano Alecrim',
     country: 'Portugal',
     birthday: '08/11/1998',
-    id: 123314
-  }
+    id: 123314,
+  },
 ]
 
 const getBirthdayBois = gql`
@@ -43,38 +42,41 @@ const getBirthdayBois = gql`
       country
     }
   }
-`;
+`
 
 export default function Table() {
   const classes = useStyles()
-  const { loading, error, data } = useQuery(
-    getBirthdayBois,
-    {
-      pollInterval: 30000,
-    });
+  const { loading, error, data } = useQuery(getBirthdayBois, {
+    pollInterval: 30000,
+  })
   const [snack, setSnack] = useState({
     open: false,
-    message: ''
+    message: '',
   })
   const handleClose = (event, reason) => {
-    setSnack(false);
-  };
+    setSnack(false)
+  }
   return (
     <div className={classes.container}>
       <DataGrid
         rows={
-          data ?
-            data.birthdayBois.map(i => {
-              return { id: i._id, name: i.name, country: i.country, birthday: i.birthday }
-            }) :
-            []
+          data
+            ? data.birthdayBois.map((i) => {
+                return {
+                  id: i._id,
+                  name: i.name,
+                  country: i.country,
+                  birthday: i.birthday,
+                }
+              })
+            : []
         }
         columns={columns}
         loading={loading}
         pageSize={5}
         onRowSelected={({ data }) => {
           let age = getAge(data.birthday)
-          let bday = new Date(data.birthday);
+          let bday = new Date(data.birthday)
           setSnack({
             open: true,
             message: `
@@ -82,11 +84,15 @@ export default function Table() {
               ${bday.getDate()} of month
               ${bday.toLocaleDateString('en-US', { month: 'long' })} you will
               have ${age + 1}
-            `
-          });
+            `,
+          })
         }}
       />
-      <Snack open={snack.open} message={snack.message} handleClose={handleClose} />
+      <Snack
+        open={snack.open}
+        message={snack.message}
+        handleClose={handleClose}
+      />
     </div>
   )
 }

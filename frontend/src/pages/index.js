@@ -1,32 +1,31 @@
-import React, { useMemo } from "react"
-import { Helmet } from "react-helmet";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { makeStyles } from '@material-ui/core/styles';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import React, { useMemo } from 'react'
+import { Helmet } from 'react-helmet'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { makeStyles } from '@material-ui/core/styles'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 //Data
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 //My comps
 import Form from '../components/form'
 import Table from '../components/table'
-
 
 //Added client with basically the same data im going to need(cuz im a lucky boi) which is great for testing!
 const client = new ApolloClient({
   uri: 'http://localhost:5001/mosano/us-central1/graphql',
   cache: new InMemoryCache(),
-  connectToDevTools: true
-});
+  connectToDevTools: true,
+})
 
 const useStyles = makeStyles((theme) => ({
   container: {
     position: 'relative',
-    minHeight: '100vh'
+    minHeight: '100vh',
   },
   content: {
-    paddingBottom: theme.spacing(3)
+    paddingBottom: theme.spacing(3),
   },
   footer: {
     position: 'absolute',
@@ -34,14 +33,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     width: '100%',
     height: theme.spacing(3),
-    paddingRight: theme.spacing(2)
-  }
-}));
+    paddingRight: theme.spacing(2),
+  },
+}))
 
 const IndexPage = () => {
   const classes = useStyles()
   //Bellow is a media query and overide for the materia-ui theme to check for the user's pref for dark/light mode. As if.
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
   const theme = useMemo(
     () =>
       createMuiTheme({
@@ -49,7 +48,8 @@ const IndexPage = () => {
           type: prefersDarkMode ? 'dark' : 'light',
         },
       }),
-    [prefersDarkMode]);
+    [prefersDarkMode],
+  )
   return (
     <div>
       <Helmet>
@@ -78,7 +78,7 @@ const IndexPage = () => {
                 </Grid>
               </Grid>
               <div className={classes.footer}>
-                <Typography align='right' >Adriano Alecrim</Typography>
+                <Typography align="right">Adriano Alecrim</Typography>
               </div>
             </div>
           </ApolloProvider>

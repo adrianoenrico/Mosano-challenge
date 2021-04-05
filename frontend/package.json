@@ -13,8 +13,6 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "lint": "eslint ./ --ignore-path .gitignore",
-    "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write \"{,!(node_modules)/**/}*.js\""
   },
   "dependencies": {
@@ -37,10 +35,8 @@
   "devDependencies": {
     "@imaginary-cloud/prettier-config": "^1.0.0",
     "eslint": "^7.23.0",
+    "jslint": "^0.12.1",
     "prettier": "^2.2.1"
-  },
-  "eslintConfig": {
-    "extends": "@imaginary-cloud/react"
   },
   "prettier": "@imaginary-cloud/prettier-config"
 }

@@ -89,6 +89,8 @@ export default function Table() {
         loading={loading}
         pageSize={5}
         disableSelectionOnClick={true}
+        // in a normal app, i'd implement pagination in client and api(if in-house)
+        // to prevent long ass queries 
         onRowClick={({ row: data }) => {
           let age = getAge(data.birthday)
           let bday = new Date(data.birthday)

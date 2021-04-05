@@ -39,6 +39,11 @@
   "devDependencies": {
     "@imaginary-cloud/prettier-config": "^1.0.0",
     "eslint": "^7.23.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "jshint": "^2.12.0",
     "jslint": "^0.12.1",
     "prettier": "^2.2.1"

@@ -92,16 +92,16 @@ export default function Table() {
 				// in a normal app, i'd implement pagination in client and api(if in-house)
 				// to prevent long ass queries
 				onRowClick={({ row }) => {
-					const age = getAge(row.data.birthday);
-					const bday = new Date(row.data.birthday);
+					const age = getAge(row.birthday);
+					const bday = new Date(row.birthday);
 					setSnack({
 						open: true,
 						message: `
-              Hello ${row.data.name} from ${row.data.country} on 
-              ${bday.getDate()} of month
-              ${bday.toLocaleDateString("en-US", { month: "long" })} you will
-              have ${age + 1}
-            `,
+							Hello ${row.name} from ${row.country} on 
+							${bday.getDate()} of month
+							${bday.toLocaleDateString("en-US", { month: "long" })} you will
+							have ${age + 1}
+						`,
 					});
 				}}
 			/>

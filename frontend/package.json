@@ -31,10 +31,12 @@
     "gatsby-plugin-sitemap": "^3.2.0",
     "graphql": "^15.5.0",
     "isomorphic-fetch": "^3.0.0",
+    "ponicode": "*",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
-    "react-hook-form": "^6.15.5"
+    "react-hook-form": "^6.15.5",
+    "rewire": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^7.24.0",

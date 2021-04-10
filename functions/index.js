@@ -62,12 +62,12 @@ const typeDefs = gql`
 const resolvers = {
   // Commenting these defy all logic.
   Query: {
-    birthdayBois: async () => BirthdayBoi.find(),
-    countries: async () => Country.find(),
+    birthdayBois: () => BirthdayBoi.find(),
+    countries: () => Country.find(),
   },
   Mutation: {
     // make doc from model with recieved args & save it.
-    addBirthdayBoi: async (parent, args) => {
+    addBirthdayBoi: (parent, args) => {
       // This mut isnt protected bc we want a public app.
       // Please never do this without rate limting the function to prevent a
       // shit ton of spam.
@@ -84,7 +84,7 @@ const resolvers = {
       return boi.save();
     },
     // The resolvers below are protected via context.
-    addCountry: async (parent, args, context) => {
+    addCountry: (parent, args, context) => {
       if (!context.loggedIn) {
         throw new AuthenticationError("AUTH TOKEN NOT FOUND OR NOT VALID");
       }

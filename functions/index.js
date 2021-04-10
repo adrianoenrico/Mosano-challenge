@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const functions = require("firebase-functions");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -6,6 +7,8 @@ const {
   gql,
   AuthenticationError,
 } = require("apollo-server-express");
+
+
 mongoose.connect(
     "mongodb+srv://adriano:7kqA6_Hh9nhSP3p@cluster0.t0ahj.mongodb.net/mosano?retryWrites=true&w=majority",
     {
@@ -59,8 +62,8 @@ const typeDefs = gql`
 const resolvers = {
   // Commenting these defy all logic.
   Query: {
-    birthdayBois: async (parent) => await BirthdayBoi.find(),
-    countries: async () => await Country.find(),
+    birthdayBois: async () => BirthdayBoi.find(),
+    countries: async () => Country.find(),
   },
   Mutation: {
     // make doc from model with recieved args & save it.
@@ -78,7 +81,7 @@ const resolvers = {
         country: args.country,
         birthday: args.birthday,
       });
-      return await boi.save();
+      return boi.save();
     },
     // The resolvers below are protected via context.
     addCountry: async (parent, args, context) => {
@@ -88,7 +91,7 @@ const resolvers = {
       const country = new Country({
         name: args.name,
       });
-      return await country.save();
+      return country.save();
     },
     deleteCountry: async (parent, args, context) => {
       if (!context.loggedIn) {
@@ -125,7 +128,7 @@ const server = new ApolloServer({
     // No token, no auth. The rest are details.
     // Could have used a password, specific token(unsafe in case of breach),
     // encripted token key(or as i like to call 'em, salty keys), passwords, etc
-    const loggedIn = req.headers.authorization ? true : false;
+    const loggedIn = !!req.headers.authorization;
     return {loggedIn};
   },
 });

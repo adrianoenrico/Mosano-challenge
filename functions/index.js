@@ -10,7 +10,7 @@ const {
 
 
 mongoose.connect(
-  "mongodb+srv://adriano:7kqA6_Hh9nhSP3p@cluster0.t0ahj.mongodb.net/mosano?retryWrites=true&w=majority",
+  "",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
